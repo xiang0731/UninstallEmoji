@@ -478,6 +478,12 @@
                 // 重置脸部渐变色为柔和的灰绿色
                 $('.face').css('background', 'linear-gradient(to bottom, #B8D8BE, #FFE17F)'); // 恢复原始渐变色
             });
+
+            // 添加"好呀"按钮点击事件
+            $('.btn-keep').on('click', function () {
+                // 可以替换为任意您想要跳转的网址
+                window.location.href = 'https://www.wow17.com/advise';
+            });
         });
     </script>
 </head>
@@ -485,7 +491,7 @@
 <body>
     <div class="container"><!-- 主容器 -->
         <div class="rectangle"><!-- 主矩形容器 -->
-            <div class="title">可以给我点个赞吗？</div><!-- 标题文字 -->
+            <div class="title">交个朋友嘛？～</div><!-- 标题文字 -->
             <div class="face"><!-- 表情脸 -->
                 <div class="eyes eye-left"><!-- 左眼 -->
                     <div class="pupil"></div><!-- 左眼瞳孔 -->
@@ -501,8 +507,8 @@
                 </div>
             </div>
             <div class="buttons"><!-- 按钮容器 -->
-                <button class="btn btn-keep">好呀</button><!-- "保留"按钮 -->
-                <button class="btn btn-uninstall">不了</button><!-- "卸载"按钮 -->
+                <button class="btn btn-keep">好呀好呀</button><!-- "保留"按钮 -->
+                <button class="btn btn-uninstall">下次一定</button><!-- "卸载"按钮 -->
             </div>
         </div>
     </div>
