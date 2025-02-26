@@ -136,18 +136,20 @@
             /* 右眼定位：从70px调整到60px，考虑到眼睛变大后的位置平衡 */
         }
 
+        /* 设置左眼初始位置 */
         .eye-left .pupil {
             margin: 0;
             /* 移除外边距 */
-            transform: translate(16px, 16px);
-            /* 初始位置：从12px增加到16px，使瞳孔在更大的眼睛中保持相对位置 */
+            transform: translate(14px, 14px);
+            /* 初始位置：从12px增加到14px，使瞳孔在更大的眼睛中保持相对位置 */
         }
 
+        /* 设置右眼初始位置 */
         .eye-right .pupil {
             margin: 0;
             /* 移除外边距 */
-            transform: translate(-16px, -16px);
-            /* 初始位置：从-12px调整到-16px，使瞳孔在更大的眼睛中保持相对位置 */
+            transform: translate(-14px, -14px);
+            /* 初始位置：从-12px调整到-14px，使瞳孔在更大的眼睛中保持相对位置 */
         }
 
         .pupil {
@@ -460,8 +462,8 @@
 
             // 鼠标离开时重置所有状态
             $rectangle.on('mouseleave', function () {
-                $('.eye-left .pupil').css('transform', 'translate(16px, 16px)'); // 左眼瞳孔恢复初始位置
-                $('.eye-right .pupil').css('transform', 'translate(-16px, -16px)'); // 右眼瞳孔恢复初始位置
+                $('.eye-left .pupil').css('transform', 'translate(14px, 14px)'); // 左眼瞳孔恢复初始位置
+                $('.eye-right .pupil').css('transform', 'translate(-14px, -14px)'); // 右眼瞳孔恢复初始位置
 
                 $mouth.css({
                     'border-radius': '0 0 148px 148px', // 恢复微笑形状（底部圆角）
