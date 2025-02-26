@@ -507,8 +507,35 @@
 
             // 添加"好呀"按钮点击事件
             $('.btn-keep').on('click', function () {
-                // 可以替换为任意您想要跳转的网址
-                window.location.href = 'https://www.wow17.com/advise';
+                // 更改按钮文字
+                $(this).text('走起走起').css({
+                    'background-color': '#2ecc71',  // 更亮的绿色
+                    'transform': 'scale(1.1)',     // 稍微放大按钮
+                    'box-shadow': '0 0 15px rgba(46, 204, 113, 0.5)'  // 添加发光效果
+                });
+
+                // 添加跳转前的动画效果
+                const $button = $(this);
+
+                // 按钮跳动动画
+                let bounce = 0;
+                const bounceInterval = setInterval(function () {
+                    bounce++;
+                    if (bounce % 2 === 0) {
+                        $button.css('transform', 'scale(1.15)');
+                    } else {
+                        $button.css('transform', 'scale(1.05)');
+                    }
+
+                    if (bounce >= 4) {
+                        clearInterval(bounceInterval);
+                    }
+                }, 250);
+
+                // 2秒后跳转
+                setTimeout(function () {
+                    window.location.href = 'https://www.wow17.com';
+                }, 2000);
             });
 
             // 添加"下次一定"按钮点击事件
