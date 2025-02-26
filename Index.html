@@ -320,6 +320,32 @@
             /* 红色背景 */
         }
 
+        /* 添加悬浮文字的动画样式 */
+        @keyframes floatAndFade {
+            0% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+
+            100% {
+                opacity: 0;
+                transform: translateY(-100px);
+            }
+        }
+
+        .floating-text {
+            position: fixed;
+            color: #FF4444;
+            font-size: 20px;
+            font-weight: bold;
+            pointer-events: none;
+            /* 确保文字不会影响鼠标事件 */
+            animation: floatAndFade 1.5s ease-out forwards;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
+            z-index: 9999;
+            font-family: "Microsoft YaHei", sans-serif;
+        }
+
         @keyframes fadeIn {
             from {
                 opacity: 0;
@@ -483,6 +509,50 @@
             $('.btn-keep').on('click', function () {
                 // 可以替换为任意您想要跳转的网址
                 window.location.href = 'https://www.wow17.com/advise';
+            });
+
+            // 添加"下次一定"按钮点击事件
+            $('.btn-uninstall').on('click', function (e) {
+                // 定义多种文字选项
+                const texts = ["快来快来", "来交朋友", "过来看看", "点左边", "试一试"];
+                // 同时显示的文字数量
+                const numTextsToShow = 1;
+
+                // 显示多个文字
+                for (let i = 0; i < numTextsToShow; i++) {
+                    // 随机选择一个文字
+                    const randomIndex = Math.floor(Math.random() * texts.length);
+                    const text = texts[randomIndex];
+
+                    // 随机颜色
+                    const colors = ["#FF4444", "#4CAF50", "#3498db", "#9b59b6", "#e67e22", "#f1c40f"];
+                    const randomColor = colors[Math.floor(Math.random() * colors.length)];
+
+                    // 创建显示文字的元素
+                    const $floatingText = $('<div class="floating-text"></div>').text(text);
+
+                    // 随机位置偏移（围绕鼠标点击位置）
+                    const offsetX = (Math.random() - 0.5) * 100; // -50到50之间的随机值
+                    const offsetY = (Math.random() - 0.5) * 60;  // -30到30之间的随机值
+
+                    // 设置文字位置和样式
+                    $floatingText.css({
+                        left: (e.clientX - 40 + offsetX) + 'px',
+                        top: (e.clientY - 10 + offsetY) + 'px',
+                        color: randomColor,
+                        // 随机动画持续时间（1.2秒到2秒）
+                        animationDuration: (1.2 + Math.random() * 0.8) + 's'
+                    });
+
+                    // 添加到body
+                    $('body').append($floatingText);
+
+                    // 动画结束后移除元素
+                    const animDuration = parseFloat($floatingText.css('animation-duration')) * 1000;
+                    setTimeout(function () {
+                        $floatingText.remove();
+                    }, animDuration);
+                }
             });
         });
     </script>
