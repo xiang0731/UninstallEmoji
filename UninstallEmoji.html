@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>动画效果</title>
+    <style>
+        body {
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: white;
+        }
+
+        .container {
+            position: relative;
+            text-align: center;
+        }
+
+        .title {
+            position: absolute;
+            width: 100%;
+            top: -50px;  /* 改为负值，移到框外 */
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 24px;
+            color: #666;
+            font-family: "Microsoft YaHei", sans-serif;
+            text-align: center;
+            z-index: 1;
+        }
+
+        .rectangle {
+            width: 800px;
+            height: 480px;
+            background-color: #f0f0f0;
+            border-radius: 15px;
+            opacity: 0;
+            animation: fadeIn 1s ease forwards;
+            position: relative;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .face {
+            position: absolute;
+            left: 50%;
+            top: 55%;
+            transform: translate(-50%, -50%);
+            width: 300px;
+            height: 300px;
+            background: linear-gradient(to bottom, #B8D8BE, #FFE17F);  /* 更改初始渐变色为柔和的灰绿色 */
+            border-radius: 50%;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .eyes {
+            position: absolute;
+            width: 60px;
+            height: 60px;
+            background-color: white;
+            border-radius: 50%;
+            top: 90px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border: none;
+            box-shadow: 
+                inset 0 2px 10px rgba(0, 0, 0, 0.1),  /* 内部上阴影 */
+                inset 0 -2px 10px rgba(0, 0, 0, 0.1),  /* 内部下阴影 */
+                0 2px 5px rgba(0, 0, 0, 0.1);  /* 外部阴影 */
+        }
+
+        .eye-left {
+            left: 70px;
+        }
+
+        .eye-right {
+            right: 70px;
+        }
+
+        .eye-left .pupil {
+            margin: 0;
+            transform: translate(12px, 12px);
+        }
+
+        .eye-right .pupil {
+            margin: 0;
+            transform: translate(-12px, -12px);
+        }
+
+        .pupil {
+            width: 30px;
+            height: 30px;
+            background-color: #8B4513;
+            border-radius: 50%;
+            transition: transform 0.1s ease;
+            box-shadow: 
+                inset 0 2px 4px rgba(0, 0, 0, 0.4),  /* 内部上阴影 */
+                inset 0 -2px 4px rgba(0, 0, 0, 0.2),  /* 内部下阴影 */
+                0 2px 4px rgba(0, 0, 0, 0.2);  /* 外部阴影 */
+        }
+
+        .mouth {
+            position: absolute;
+            width: 148px;
+            height: 70px;
+            background-color: #FF6B6B;
+            bottom: 50px;
+            left: 50%;
+            transform: translateX(-50%);
+            overflow: hidden;
+            border-radius: 0 0 148px 148px;
+            transition: all 0.3s ease;
+            box-shadow: 
+                inset 0 -15px 15px -10px rgba(0, 0, 0, 0.3),  /* 内部下阴影 */
+                0 5px 10px -5px rgba(0, 0, 0, 0.2);          /* 外部下阴影 */
+        }
+
+        .tooth {
+            position: absolute;
+            width: 25px;
+            height: 12px;
+            background-color: white;
+            border-radius: 0 0 5px 5px;
+            top: 2px;
+            right: 30px;
+        }
+
+        .tongue {
+            position: absolute;
+            width: 73px;
+            height: 40px;
+            background-color: #FF9999;
+            border-radius: 63%;
+            bottom: -12px;
+            left: 23px;
+            transform: rotate(-5deg);
+            box-shadow: inset 0 5px 15px -5px rgba(0, 0, 0, 0.3);  /* 内阴影 */
+        }
+
+        .blush {
+            position: absolute;
+            width: 60px;
+            height: 30px;
+            background-color: rgba(255, 99, 132, 0.3);
+            border-radius: 50%;
+            top: 150px;
+            box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.1);  /* 内阴影 */
+        }
+
+        .blush-left {
+            left: 35px;
+        }
+
+        .blush-right {
+            right: 35px;
+        }
+
+        .buttons {
+            position: absolute;
+            bottom: 40px;
+            left: 0;
+            right: 0;
+            display: flex;
+            justify-content: space-between;
+            padding: 0 50px;  /* 减小内边距，让按钮更靠近两边 */
+        }
+
+        .btn {
+            padding: 10px 35px;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            color: white;
+            cursor: pointer;
+            font-family: "Microsoft YaHei", sans-serif;
+            transition: transform 0.2s ease;
+        }
+
+        .btn:hover {
+            transform: scale(1.05);  /* 鼠标悬停时轻微放大 */
+        }
+
+        .btn-keep {
+            background-color: #4CAF50;  /* 绿色 */
+        }
+
+        .btn-uninstall {
+            background-color: #FF4444;  /* 红色 */
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            const $rectangle = $('.rectangle');
+            const $eyes = $('.eyes');
+            const $mouth = $('.mouth');
+            const $title = $('.title');
+            
+            $rectangle.on('mousemove', function(e) {
+                // 检查鼠标是否在标题区域
+                const titleRect = $title[0].getBoundingClientRect();
+                if (e.clientY >= titleRect.top && e.clientY <= titleRect.bottom &&
+                    e.clientX >= titleRect.left && e.clientX <= titleRect.right) {
+                    return;  // 如果在标题区域内，不处理事件
+                }
+
+                const rect = $rectangle[0].getBoundingClientRect();
+                const mouseX = e.clientX - rect.left;
+                const mouseY = e.clientY - rect.top;
+                const rectWidth = rect.width;
+                
+                // 计算鼠标在矩形中的相对位置（0到1之间）
+                const position = mouseX / rectWidth;
+                
+                // 处理眼球移动
+                $eyes.each(function() {
+                    const $eye = $(this);
+                    const eyeRect = this.getBoundingClientRect();
+                    const eyeCenterX = eyeRect.left + eyeRect.width / 2 - rect.left;
+                    const eyeCenterY = eyeRect.top + eyeRect.height / 2 - rect.top;
+                    
+                    const angle = Math.atan2(mouseY - eyeCenterY, mouseX - eyeCenterX);
+                    const maxDistance = 15;
+                    
+                    const distance = Math.min(
+                        maxDistance,
+                        Math.hypot(mouseX - eyeCenterX, mouseY - eyeCenterY) / 5
+                    );
+                    
+                    const pupilX = Math.cos(angle) * distance;
+                    const pupilY = Math.sin(angle) * distance;
+                    
+                    $eye.find('.pupil').css('transform', `translate(${pupilX}px, ${pupilY}px)`);
+                });
+
+                // 处理嘴巴形状变化和位置
+                // 计算嘴巴的偏移量，基于鼠标在整个矩形中的位置
+                const centerX = rectWidth / 2;
+                const centerY = rect.height / 2;
+                const maxOffset = 8;  // 最大偏移像素
+
+                // 计算相对于中心点的偏移
+                const offsetX = ((mouseX - centerX) / centerX) * maxOffset;
+                const offsetY = ((mouseY - centerY) / centerY) * maxOffset;
+
+                if (position <= 0.5) {
+                    // 左半边：笑脸
+                    $mouth.css({
+                        'border-radius': '0 0 148px 148px',
+                        'height': '70px',
+                        'bottom': `${50 - offsetY / 2}px`,
+                        'transform': `translateX(calc(-50% + ${offsetX / 2}px))`
+                    });
+                } else {
+                    // 右半边：从椭圆过渡到哭脸
+                    const progress = (position - 0.5) * 2;
+                    const topRadius = progress * 148;
+                    const bottomRadius = (1 - progress) * 148;
+                    
+                    $mouth.css({
+                        'border-radius': `${topRadius}px ${topRadius}px ${bottomRadius}px ${bottomRadius}px`,
+                        'height': '70px',
+                        'bottom': `${50 - offsetY / 2}px`,
+                        'transform': `translateX(calc(-50% + ${offsetX / 2}px))`
+                    });
+                }
+
+                // 处理脸部渐变色
+                // 计算颜色值（从黄色到灰绿色的渐变）
+                const baseGreen = 216;  // 绿色基础值改为更柔和的值
+                const targetYellow = 255;  // FFE17F 的 RGB 值
+                const targetGreen = 225;   // FFE17F 的 RGB 值
+                const targetBlue = 127;    // FFE17F 的 RGB 值
+                
+                // 根据位置计算RGB分量
+                let redValue, blueValue;
+                if (position <= 0.5) {
+                    // 从 FFE17F 到灰绿色
+                    redValue = Math.floor(targetYellow - position * 2 * (targetYellow - 184));  // 184 是灰绿色的红色分量
+                    blueValue = Math.floor(targetBlue + position * 2 * (190 - targetBlue));    // 190 是灰绿色的蓝色分量
+                } else {
+                    // 从灰绿色到深灰绿色
+                    redValue = Math.floor(184 - (position - 0.5) * 2 * (184 - 164));
+                    blueValue = Math.floor(190 - (position - 0.5) * 2 * (190 - 170));
+                }
+                
+                const topColor = `rgb(${redValue}, ${baseGreen}, ${blueValue})`;
+                $('.face').css('background', `linear-gradient(to bottom, ${topColor}, #FFE17F)`);
+
+                // 处理脸颊红晕的透明度和阴影
+                const blushOpacity = Math.max(0, 1 - position);  // 从1逐渐减小到0
+                const shadowOpacity = Math.max(0, 1 - position);  // 阴影也跟随透明度变化
+                $('.blush').css({
+                    'background-color': `rgba(255, 99, 132, ${blushOpacity * 0.3})`,
+                    'box-shadow': `inset 0 2px 5px rgba(0, 0, 0, ${shadowOpacity * 0.1})`
+                });
+            });
+            
+            // 鼠标离开时重置所有状态
+            $rectangle.on('mouseleave', function() {
+                $('.eye-left .pupil').css('transform', 'translate(12px, 12px)');
+                $('.eye-right .pupil').css('transform', 'translate(-12px, -12px)');
+
+                $mouth.css({
+                    'border-radius': '0 0 148px 148px',
+                    'height': '70px',
+                    'bottom': '50px',
+                    'transform': 'translateX(-50%)'
+                });
+
+                // 重置红晕透明度和阴影
+                $('.blush').css({
+                    'background-color': 'rgba(255, 99, 132, 0.3)',
+                    'box-shadow': 'inset 0 2px 5px rgba(0, 0, 0, 0.1)'
+                });
+
+                // 重置脸部渐变色为柔和的灰绿色
+                $('.face').css('background', 'linear-gradient(to bottom, #B8D8BE, #FFE17F)');
+            });
+
+            // 标题区域的鼠标事件
+            $title.on('mouseenter mousemove', function(e) {
+                e.stopPropagation();  // 阻止事件冒泡到矩形
+            });
+        });
+    </script>
+</head>
+
+<body>
+    <div class="container">
+        <div class="title">你真的要卸载我吗？</div>
+        <div class="rectangle">
+            <div class="face">
+                <div class="eyes eye-left">
+                    <div class="pupil"></div>
+                </div>
+                <div class="eyes eye-right">
+                    <div class="pupil"></div>
+                </div>
+                <div class="blush blush-left"></div>
+                <div class="blush blush-right"></div>
+                <div class="mouth">
+                    <div class="tooth"></div>
+                    <div class="tongue"></div>
+                </div>
+            </div>
+            <div class="buttons">
+                <button class="btn btn-keep">保留</button>
+                <button class="btn btn-uninstall">卸载</button>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
