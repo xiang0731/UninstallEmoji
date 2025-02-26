@@ -409,17 +409,19 @@
                 // 计算嘴巴的偏移量，基于鼠标在整个矩形中的位置
                 const centerX = rect.width / 2; // 矩形中心X坐标
                 const centerY = rect.height / 2; // 矩形中心Y坐标
+                // 嘴巴随着鼠标移动而移动，数字越大移动距离越大
                 const maxOffset = 8;  // 最大偏移像素
 
                 // 计算相对于中心点的偏移
                 const offsetX = ((mouseX - centerX) / centerX) * maxOffset;
                 const offsetY = ((mouseY - centerY) / centerY) * maxOffset;
 
+                // 嘴巴在开心和沮丧最大值时的圆角
                 // 基于progress直接计算嘴巴的圆角形状，实现完全平滑的过渡
                 // 计算底部圆角（从148px逐渐变为0）
-                const bottomRadius = Math.max(0, 148 * (1 - progress));
+                const bottomRadius = Math.max(8, 148 * (1 - progress));
                 // 计算顶部圆角（从0逐渐变为148px）
-                const topRadius = Math.max(0, 148 * progress);
+                const topRadius = Math.max(8, 148 * progress);
 
                 // 设置嘴巴CSS，形状完全由progress值决定
                 $mouth.css({
@@ -465,6 +467,7 @@
                 $('.eye-left .pupil').css('transform', 'translate(14px, 14px)'); // 左眼瞳孔恢复初始位置
                 $('.eye-right .pupil').css('transform', 'translate(-14px, -14px)'); // 右眼瞳孔恢复初始位置
 
+                // 嘴巴恢复初始状态
                 $mouth.css({
                     'border-radius': '0 0 148px 148px', // 恢复微笑形状（底部圆角）
                     'height': '70px', // 恢复原始高度
