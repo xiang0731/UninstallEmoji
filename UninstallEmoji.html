@@ -413,41 +413,19 @@
                 const offsetX = ((mouseX - centerX) / centerX) * maxOffset;
                 const offsetY = ((mouseY - centerY) / centerY) * maxOffset;
 
-                // 基于鼠标离开"保留"按钮到靠近"卸载"按钮的距离来决定表情
-                if (progress <= 0.3) {
-                    // 靠近保留按钮：完全笑脸
-                    $mouth.css({
-                        'border-radius': '0 0 148px 148px', // 设置底部圆角，形成微笑
-                        'height': '70px', // 嘴巴高度
-                        'bottom': `${50 - offsetY / 2}px`, // 根据鼠标位置调整嘴巴垂直位置
-                        'transform': `translateX(calc(-50% + ${offsetX / 2}px))` // 根据鼠标位置调整嘴巴水平位置
-                    });
-                } else if (progress >= 0.7) {
-                    // 靠近卸载按钮：完全哭脸（上下颠倒的嘴巴形状）
-                    $mouth.css({
-                        'border-radius': '148px 148px 0 0', // 设置顶部圆角，形成哭脸（与微笑完全相反）
-                        'height': '70px', // 嘴巴高度
-                        'bottom': `${50 - offsetY / 2}px`, // 根据鼠标位置调整嘴巴垂直位置
-                        'transform': `translateX(calc(-50% + ${offsetX / 2}px))` // 根据鼠标位置调整嘴巴水平位置
-                    });
-                } else {
-                    // 在中间位置：嘴巴形状的平滑过渡
-                    // 归一化进度，使其从0.3到0.7之间变化（0到1）
-                    const normalizedProgress = (progress - 0.3) / 0.4;
+                // 基于progress直接计算嘴巴的圆角形状，实现完全平滑的过渡
+                // 计算底部圆角（从148px逐渐变为0）
+                const bottomRadius = Math.max(0, 148 * (1 - progress));
+                // 计算顶部圆角（从0逐渐变为148px）
+                const topRadius = Math.max(0, 148 * progress);
 
-                    // 计算过渡中的底部圆角（从148px逐渐变为0）
-                    const bottomRadius = Math.max(0, 148 * (1 - normalizedProgress));
-
-                    // 计算过渡中的顶部圆角（从0逐渐变为148px）
-                    const topRadius = Math.max(0, 148 * normalizedProgress);
-
-                    $mouth.css({
-                        'border-radius': `${topRadius}px ${topRadius}px ${bottomRadius}px ${bottomRadius}px`, // 设置四个圆角，形成从微笑到哭泣的平滑过渡
-                        'height': '70px', // 嘴巴高度
-                        'bottom': `${50 - offsetY / 2}px`, // 根据鼠标位置调整嘴巴垂直位置
-                        'transform': `translateX(calc(-50% + ${offsetX / 2}px))` // 根据鼠标位置调整嘴巴水平位置
-                    });
-                }
+                // 设置嘴巴CSS，形状完全由progress值决定
+                $mouth.css({
+                    'border-radius': `${topRadius}px ${topRadius}px ${bottomRadius}px ${bottomRadius}px`,
+                    'height': '70px',
+                    'bottom': `${50 - offsetY / 2}px`,
+                    'transform': `translateX(calc(-50% + ${offsetX / 2}px))`
+                });
 
                 // 处理脸部渐变色
                 // 使用相同的progress值来更新脸部颜色
